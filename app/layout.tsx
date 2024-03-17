@@ -19,6 +19,9 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       images: [settings.data.meta_og_image || ""],
     },
+    icons: {
+      icon: "/olive.png",
+    },
   };
 }
 
