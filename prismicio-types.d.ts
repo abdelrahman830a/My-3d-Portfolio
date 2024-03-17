@@ -423,7 +423,18 @@ interface SettingsDocumentData {
    * - **Tab**: Main
    * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
    */
-  github: prismic.LinkField /**
+  github: prismic.LinkField;
+
+  /**
+   * freelancer field in *settings*
+   *
+   * - **Field Type**: Link
+   * - **Placeholder**: *None*
+   * - **API ID Path**: settings.freelancer
+   * - **Tab**: Main
+   * - **Documentation**: https://prismic.io/docs/field#link-content-relationship
+   */
+  freelancer: prismic.LinkField /**
    * Meta Title field in *settings*
    *
    * - **Field Type**: Text

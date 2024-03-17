@@ -5,7 +5,8 @@ import { PrismicNextLink } from "@prismicio/next";
 import Link from "next/link";
 import Bounded from "@/components/Bounded";
 import { isFilled } from "@prismicio/client";
-import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa6";
+import { FaGithub, FaLinkedin } from "react-icons/fa6";
+import { SiFreelancer } from "react-icons/si";
 
 export default async function Footer() {
   const client = createClient();
@@ -16,12 +17,14 @@ export default async function Footer() {
         <div className="name flex flex-col items-center justify-center gap-x-4 gap-y-2 sm:flex-row sm:justify-self-start">
           <Link
             href="/"
-            className="text-xl font-extrabold tracking-tighter text-slate-100 transition-colors duration-150 hover:text-yellow-400">
+            className="text-xl font-extrabold tracking-tighter text-slate-100 transition-colors duration-150 hover:text-yellow-400"
+          >
             {settings.data.name}
           </Link>
           <span
             className="hidden text-5xl font-extralight leading-[0] text-slate-400 sm:inline"
-            aria-hidden={true}>
+            aria-hidden={true}
+          >
             /
           </span>
           <p className=" text-sm text-slate-300 ">
@@ -35,16 +38,18 @@ export default async function Footer() {
                 <li>
                   <PrismicNextLink
                     className={clsx(
-                      "group relative block overflow-hidden  rounded px-3 py-1 text-base font-bold text-slate-100 transition-colors duration-150 hover:hover:text-yellow-400"
+                      "group relative block overflow-hidden  rounded px-3 py-1 text-base font-bold text-slate-100 transition-colors duration-150 hover:hover:text-yellow-400",
                     )}
-                    field={link}>
+                    field={link}
+                  >
                     {label}
                   </PrismicNextLink>
                 </li>
                 {index < settings.data.nav_item.length - 1 && (
                   <span
                     className="text-4xl font-thin leading-[0] text-slate-400"
-                    aria-hidden="true">
+                    aria-hidden="true"
+                  >
                     /
                   </span>
                 )}
@@ -57,7 +62,8 @@ export default async function Footer() {
             <PrismicNextLink
               field={settings.data.github}
               className="p-2 text-2xl text-slate-300 transition-all duration-150 hover:scale-125 hover:text-yellow-400"
-              aria-label={settings.data.name + " on GitHub"}>
+              aria-label={settings.data.name + " on GitHub"}
+            >
               <FaGithub />
             </PrismicNextLink>
           )}
@@ -69,11 +75,21 @@ export default async function Footer() {
               <FaTwitter />
             </PrismicNextLink>
           )} */}
+          {isFilled.link(settings.data.freelancer) && (
+            <PrismicNextLink
+              field={settings.data.freelancer}
+              className="p-2 text-2xl text-slate-300 transition-all duration-150 hover:scale-125 hover:text-yellow-400"
+              aria-label={settings.data.name + " on Freelancer"}
+            >
+              <SiFreelancer />
+            </PrismicNextLink>
+          )}
           {isFilled.link(settings.data.linkedin) && (
             <PrismicNextLink
               field={settings.data.linkedin}
               className="p-2 text-2xl text-slate-300 transition-all duration-150 hover:scale-125 hover:text-yellow-400"
-              aria-label={settings.data.name + " on LinkedIn"}>
+              aria-label={settings.data.name + " on LinkedIn"}
+            >
               <FaLinkedin />
             </PrismicNextLink>
           )}

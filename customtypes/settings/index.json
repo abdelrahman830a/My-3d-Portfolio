@@ -67,6 +67,14 @@
           "placeholder": "",
           "select": null
         }
+      },
+      "freelancer": {
+        "type": "Link",
+        "config": {
+          "label": "freelancer",
+          "placeholder": "",
+          "select": null
+        }
       }
     },
     "SEO and Metadata": {
