@@ -51,7 +51,7 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
               : gsap.utils.random(600, 400);
           },
           ease: "power1.inOut",
-        }
+        },
       );
     }, component);
     return () => ctx.revert(); // cleanup!
@@ -62,27 +62,32 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="wrapper overflow-hidden"
-      ref={component}>
+      ref={component}
+    >
       <Bounded as="div">
-        <Heading size="xl" className="mb-8" as="h2">
-          {slice.primary.heading}
-        </Heading>
+        <div className="py-10">
+          <Heading size="lg" className="mb-8" as="h2">
+            {slice.primary.heading}
+          </Heading>
+        </div>
       </Bounded>
 
       {slice.items.map(({ tech_color, tech_name }, index) => (
         <div
           key={index}
           className="tech-row mb-8 flex items-center justify-center gap-4 text-slate-700"
-          aria-label={tech_name || ""}>
+          aria-label={tech_name || ""}
+        >
           {Array.from({ length: 15 }, (_, index) => (
             <React.Fragment key={index}>
               <span
                 className={
-                  "tech-item text-8xl font-extrabold uppercase tracking-tighter"
+                  "tech-item text-5xl font-extrabold uppercase tracking-tighter md:text-8xl"
                 }
                 style={{
                   color: index === 7 && tech_color ? tech_color : "inherit",
-                }}>
+                }}
+              >
                 {tech_name}
               </span>
               <span className="text-3xl">

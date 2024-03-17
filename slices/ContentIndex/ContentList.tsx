@@ -54,7 +54,7 @@ export default function ContentList({
               end: "bottom center",
               toggleActions: "play none none none",
             },
-          }
+          },
         );
       });
 
@@ -137,20 +137,23 @@ export default function ContentList({
       <ul
         ref={component}
         className="grid border-b border-b-slate-100"
-        onMouseLeave={onMouseLeave}>
+        onMouseLeave={onMouseLeave}
+      >
         {items.map((post, index) => (
           <li
             key={index}
             ref={(el) => (itemsRef.current[index] = el)}
             onMouseEnter={() => onMouseEnter(index)}
-            className="list-item opacity-0">
+            className="list-item opacity-0"
+          >
             <a
               href={`${urlPrefix}/${post.uid}`}
               className="flex flex-col justify-between border-t border-t-slate-100 py-10  text-slate-200 md:flex-row "
-              aria-label={post.data.title || ""}>
+              aria-label={post.data.title || ""}
+            >
               <div className="flex flex-col">
                 <span className="text-3xl font-bold">{post.data.title}</span>
-                <div className="flex gap-3 text-yellow-400">
+                <div className="flex flex-wrap gap-3 text-yellow-400">
                   {post.tags.map((tag, index) => (
                     <span key={index} className="text-lg font-bold">
                       {tag}
@@ -172,7 +175,8 @@ export default function ContentList({
             backgroundImage:
               currentItem !== null ? `url(${contentImages[currentItem]})` : "",
           }}
-          ref={revealRef}></div>
+          ref={revealRef}
+        ></div>
       </ul>
     </>
   );
