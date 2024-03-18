@@ -1,142 +1,132 @@
 "use client";
-import React from "react";
 
-const Contact = () => {
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { infer, z } from "zod";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import process from "process";
+import { formSchema } from "@/lib/validations";
+import { toast } from "@/components/ui/use-toast";
+
+const Page = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: "",
+    },
+  });
+
+  // 2. Define a submit handler.
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    toast({
+      title: "Redirecting to email app...",
+    });
+
+    try {
+      const { name, email, message } = values;
+      const subject = encodeURIComponent(`Message from ${name}`);
+      const body = encodeURIComponent(message);
+
+      // Generate the mailto link with predefined subject and body
+      const mailtoLink = `mailto:abdelrahmanzaitoun9@gmail.com?subject=${subject}&body=${body}`;
+
+      // Open the user's default email client with the pre-filled details
+      window.location.href = mailtoLink;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to send email");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
-    <section className="mt-5 overflow-hidden bg-gray-400/5 px-5 py-8 md:px-16">
-      <div className="space-y-5">
+    <section className="overflow-hidden bg-gray-400/5 py-8 md:px-16">
+      <div className="flex flex-col items-center justify-center md:mx-5 lg:mx-40">
         <div className="flex flex-col items-center justify-center gap-2 text-center text-slate-300">
-          <h1 className="text-6xl font-bold leading-loose text-slate-300">
+          <h1 className="text-6xl font-bold leading-relaxed text-slate-300 md:leading-loose">
             Want to offer coffee?
           </h1>
         </div>
-        <form>
-          <div className="flex flex-col items-center justify-center gap-5">
-            <div className="flex flex-col gap-5">
-              <input
-                className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600"
-                type="text"
-                placeholder="Name"
-              />
-              <input
-                className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600"
-                type="email"
-                placeholder="Email"
-              />
-            </div>
-            <textarea
-              className="min-h-[150px] w-80 rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600"
-              placeholder="Message"
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Zaitoun"
+                      {...field}
+                      className="rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600 md:w-80"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
             />
-            <button
-              className="w-80 rounded-md bg-slate-500 px-5 py-2 hover:bg-slate-600"
+            <FormField
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="zaitoun@zaitoun.vercel.app"
+                      {...field}
+                      className="rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600 md:w-80"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Message</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="message..."
+                      {...field}
+                      className=" h-32 rounded-md border border-gray-200 border-opacity-40 bg-slate-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-slate-600 md:w-80"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-400" />
+                </FormItem>
+              )}
+            />
+
+            <Button
+              disabled={isSubmitting}
               type="submit"
-              onClick={(e) => e.preventDefault()}
+              className="hover:textslate-800 w-60 rounded-md bg-slate-300 px-5 py-2 text-slate-900 transition duration-300 ease-in-out hover:bg-slate-400 hover:shadow-xl md:w-80"
             >
-              Send
-            </button>
-          </div>
-        </form>
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </Button>
+          </form>
+        </Form>
       </div>
     </section>
   );
 };
 
-export default Contact;
-
-// const Contact = () => {
-//   return (
-//     <section className="mt-5 overflow-hidden bg-gray-400/5 px-5 py-4 md:px-16">
-//       <div className="space-y-5">
-//         <div className="flex flex-col items-center justify-center gap-2 text-center text-white">
-//           <h1 className="font-poppins text-4xl font-bold text-teal-500">
-//             Want to offer coffee?
-//           </h1>
-//         </div>
-//         <form>
-//           <div className="flex flex-col items-center justify-center gap-5">
-//             <div className="flex flex-col gap-5">
-//               <input
-//                 className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-gray-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500"
-//                 type="text"
-//                 placeholder="Name"
-//               />
-//               <input
-//                 className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-gray-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500"
-//                 type="email"
-//                 placeholder="Email"
-//               />
-//             </div>
-//             <input
-//               className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-gray-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500"
-//               type="text"
-//               placeholder="Subject"
-//             />
-//             <textarea
-//               className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-gray-900/50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500"
-//               placeholder="Message"
-//             />
-//             <button
-//               className="w-80 rounded-md bg-teal-500 px-5 py-2 hover:bg-teal-600"
-//               type="submit"
-//               onClick={(e) => e.preventDefault()}
-//             >
-//               Send
-//             </button>
-//           </div>
-//         </form>
-//       </div>
-//     </section>
-//   );
-// };
-
-// export default Contact;
-// import React from "react";
-
-// // const Contact = () => {
-// //   return (
-// //     <section className="mt-5 overflow-hidden bg-gray-400/5 px-5 py-4 md:px-16">
-// //       <div className="space-y-5">
-// //         <div className="flex flex-col items-center justify-center gap-2 text-center text-white">
-// //           <h1 className="font-poppins text-4xl font-bold text-teal-500">
-// //             Want to offer coffee?
-// //           </h1>
-// //         </div>
-// //         <form>
-// //           <div className="flex flex-col items-center justify-center gap-5">
-// //             <div className="flex flex-col gap-5">
-// //               <input
-// //                 className="w-80 rounded-md border border-gray-200 border-opacity-40 bg-opacity-50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-900"
-// //                 type="text"
-// //                 placeholder="Name"
-// //               />
-// //               <input
-// //                 className="w-80  rounded-md border border-gray-200 border-opacity-40 bg-opacity-50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-900"
-// //                 type="email"
-// //                 placeholder="Email"
-// //               />
-// //             </div>
-// //             <input
-// //               className="w-80  rounded-md border border-gray-200 border-opacity-40 bg-opacity-50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-900"
-// //               type="text"
-// //               placeholder="Subject"
-// //             />
-// //             <textarea
-// //               className="w-80 rounded-md border border-gray-200  border-opacity-40 bg-opacity-50 px-5 py-2 text-white outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-900"
-// //               placeholder="Message"
-// //             />
-// //             <button
-// //               className="w-80 rounded-md bg-teal-500 px-5 py-2 hover:bg-teal-600"
-// //               type="submit"
-// //               onClick={(e) => e.preventDefault()}
-// //             >
-// //               Send
-// //             </button>
-// //           </div>
-// //         </form>
-// //       </div>
-// //     </section>
-// //   );
-// // };
-
-// // export default Contact;
+export default Page;

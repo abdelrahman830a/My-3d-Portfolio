@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import clsx from "clsx";
 import { PrismicPreview } from "@prismicio/next";
 import { createClient, repositoryName } from "@/prismicio";
+import { Toaster } from "@/components/ui/toaster";
 
 const urbanist = Urbanist({ subsets: ["latin"] });
 
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Footer />
         <div className="background-gradient absolute inset-0 -z-50 max-h-screen" />
         <div className="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light" />
+        <Toaster />
       </body>
       <PrismicPreview repositoryName={repositoryName} />
     </html>
