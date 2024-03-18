@@ -19,6 +19,6 @@ export default Page;
 
 export async function generateStaticParams() {
   return {
-    slug: "contact",
+    route: "/contact",
   };
 }
