@@ -9,6 +9,11 @@ import { MdMenu, MdClose } from "react-icons/md";
 import Button from "./Button";
 import { usePathname } from "next/navigation";
 
+const contactLink = {
+  link_type: "Web",
+  url: "/contact",
+};
+
 export default function NavBar({
   settings,
 }: {
@@ -84,7 +89,7 @@ export default function NavBar({
           <li>
             <div onClick={() => setOpen(false)}>
               <Button
-                linkField={settings.data.cta_link}
+                linkField={contactLink}
                 label={settings.data.cta_label}
                 className="ml-3"
               />
@@ -152,11 +157,7 @@ function DesktopMenu({
         </React.Fragment>
       ))}
       <li>
-        <Button
-          linkField={settings.data.cta_link}
-          label={settings.data.cta_label}
-          className="ml-3"
-        />
+        <Button linkField={contactLink} label="Contact" className="ml-3" />
       </li>
     </div>
   );
