@@ -5,14 +5,8 @@ import React, { useState } from "react";
 import { Content, KeyTextField, asLink } from "@prismicio/client";
 import { PrismicNextLink } from "@prismicio/next";
 import Link from "next/link";
-import { MdMenu, MdClose } from "react-icons/md";
-import Button from "./Button";
+import { MdMenu, MdClose, MdArrowOutward } from "react-icons/md";
 import { usePathname } from "next/navigation";
-
-const contactLink = {
-  link_type: "Web",
-  url: "/contact",
-};
 
 export default function NavBar({
   settings,
@@ -88,11 +82,20 @@ export default function NavBar({
           ))}
           <li>
             <div onClick={() => setOpen(false)}>
-              <Button
-                linkField={contactLink}
-                label={settings.data.cta_label}
-                className="ml-3"
-              />
+              <Link
+                href="/contact"
+                className="group relative flex w-fit items-center justify-center overflow-hidden rounded-md border-2 border-slate-900 bg-slate-50  px-4 py-2 font-bold text-slate-800 transition-transform ease-out hover:scale-105"
+              >
+                <span
+                  className={clsx(
+                    "absolute inset-0 z-0 h-full translate-y-9 bg-yellow-300 transition-transform  duration-300 ease-in-out group-hover:translate-y-0",
+                  )}
+                />
+                <span className="relative flex items-center justify-center gap-2">
+                  Contact
+                  <MdArrowOutward className="inline-block" />
+                </span>
+              </Link>
             </div>
           </li>
         </div>
@@ -157,7 +160,20 @@ function DesktopMenu({
         </React.Fragment>
       ))}
       <li>
-        <Button linkField={contactLink} label="Contact" className="ml-3" />
+        <Link
+          href="/contact"
+          className="group relative flex w-fit items-center justify-center overflow-hidden rounded-md border-2 border-slate-900 bg-slate-50  px-4 py-2 font-bold text-slate-800 transition-transform ease-out hover:scale-105"
+        >
+          <span
+            className={clsx(
+              "absolute inset-0 z-0 h-full translate-y-9 bg-yellow-300 transition-transform  duration-300 ease-in-out group-hover:translate-y-0",
+            )}
+          />
+          <span className="relative flex items-center justify-center gap-2">
+            Contact
+            <MdArrowOutward className="inline-block" />
+          </span>
+        </Link>
       </li>
     </div>
   );
