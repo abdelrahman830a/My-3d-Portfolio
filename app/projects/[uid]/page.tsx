@@ -16,17 +16,6 @@ export default async function Page({ params }: { params: Params }) {
   return <ContentBody page={page} />;
 }
 
-export async function getStaticPaths() {
-  const client = createClient();
-  const pages = await client.getAllByType("project");
-
-  const paths = pages.map((page) => ({
-    params: { uid: page.uid },
-  }));
-
-  return { paths, fallback: "blocking" };
-}
-
 export async function generateStaticParams() {
   const client = createClient();
   const pages = await client.getAllByType("project");
