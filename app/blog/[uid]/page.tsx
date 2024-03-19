@@ -16,6 +16,26 @@ export default async function Page({ params }: { params: Params }) {
   return <ContentBody page={page} />;
 }
 
+export async function getStaticPaths() {
+  const client = createClient();
+  const pages = await client.getAllByType("blog_posts");
+
+  const paths = pages.map((page) => ({
+    params: { uid: page.uid },
+  }));
+
+  return { paths, fallback: "blocking" };
+}
+
+export async function generateStaticParams() {
+  const client = createClient();
+  const pages = await client.getAllByType("blog_posts");
+
+  return pages.map((page) => {
+    return { uid: page.uid };
+  });
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -30,13 +50,4 @@ export async function generateMetadata({
     title: page.data.meta_title,
     description: page.data.meta_description,
   };
-}
-
-export async function generateStaticParams() {
-  const client = createClient();
-  const pages = await client.getAllByType("blog_posts");
-
-  return pages.map((page) => {
-    return { uid: page.uid };
-  });
 }
