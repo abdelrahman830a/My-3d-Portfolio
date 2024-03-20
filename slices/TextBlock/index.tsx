@@ -15,6 +15,6 @@ const TextBlock = ({ slice }: TextBlockProps): JSX.Element => {
       <PrismicRichText field={slice.primary.text} />
     </div>
   );
-};
+}; 
 
 export default TextBlock;
