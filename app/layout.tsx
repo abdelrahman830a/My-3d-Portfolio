@@ -36,6 +36,7 @@ export default function RootLayout({
       lang="en"
       className="bg-slate-900 text-slate-100 scrollbar-thin scrollbar-track-slate-500 scrollbar-thumb-slate-700"
     >
+      <meta name="google-site-verification" content="64pqAJcHZOgQICYwUgZ4AF-57XF3HB8x1SofM-xwD28" />
       <body className={clsx(urbanist.className, "relative min-h-screen")}>
         <Header />
         {children}
