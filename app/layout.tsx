@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -39,7 +38,6 @@ export default function RootLayout({
     >
       <body className={clsx(urbanist.className, "relative min-h-screen")}>
         <Header />
-        <SpeedInsights/>
         {children}
         <Footer />
         <div className="background-gradient absolute inset-0 -z-50 max-h-screen" />
